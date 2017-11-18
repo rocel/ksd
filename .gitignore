@@ -1,0 +1,21 @@
+# Logs
+*.log
+
+# Build
+target/
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Temporary folder
+/temp/
+
+# Runtime
+*.pid
+
+# Logs
+logs/
