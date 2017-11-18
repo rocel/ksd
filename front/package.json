@@ -16,7 +16,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "vue": "^2.5.2",
-    "vue-materialize-datatable": "^0.6.9",
+    "vue-data-tables": "^3.0.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -1,0 +1,39 @@
+{
+  "graph": {
+    "topologyName": "fsks-damien-12129129-DeliveryTopology",
+    "topics": [
+      "delivery-ads-by-stat-id",
+      "delivery-ads-by-creative-str-id",
+      "services-tactics",
+      "services-lines"
+    ],
+    "stores": [
+      "ads-by-stat-id-store",
+      "ads-by-creative-id-str-store",
+      "tactics",
+      "lines"
+    ]
+  },
+  "tactics": {
+    "6c8507b2-9df7-11e7-b2bd-410e8f834316": {
+      "one": "value_one_one",
+      "unknownOne": 1505907166123,
+      "two": "value_one_two",
+      "three": "value_one_three",
+      "four": "value_one_four",
+      "five": "value_one_five",
+      "six": "value_one_six",
+      "seven": "value_one_seven"
+    },
+    "bb8c9ac9-c51d-43fc-ada9-d84a9e042041": {
+      "one": "value_two_one",
+      "unknown": "value_two_unknown",
+      "two": "value_two_two",
+      "three": "value_two_three",
+      "four": "value_two_four",
+      "five": "value_two_five",
+      "six": "value_two_six",
+      "seven": "value_two_seven"
+    }
+  }
+}

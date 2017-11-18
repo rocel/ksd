@@ -33,9 +33,11 @@ export default {
   watch: {
     $route (to, from) {
       if (to.params.storeName) {
+        this.topicName = null
         this.storeName = to.params.storeName
         console.log('Loading store data for :', this.storeName)
       } else if (to.params.topicName) {
+        this.storeName = null
         this.topicName = to.params.topicName
         console.log('Loading topic data for :', this.topicName)
       }

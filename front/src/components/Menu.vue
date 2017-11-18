@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     fetchGraph () {
-      console.log('Fetching menu')
+      console.log('Fetching graph')
       api.get('graph').then((response) => {
         this.graph = response.data
       })
@@ -41,37 +41,37 @@ export default {
 <style>
 .menu {
   top: 0;
-  position: absolute;
+  position: fixed;
   background-color: #39404e;
   width: 300px;
   height: 100%;
 }
-h1,
+.menu h1,
 h2 {
     font-weight: normal;
     color: #ffffff;
 }
-.topologyName {
+.menu .topologyName {
     color: white;
     border: 1px solid #eee;
-    margin: 5px;
+    margin: 10px;
     padding: 10px;
 }
-ul {
+.menu ul {
     list-style-type: none;
     padding: 0;
 }
-li {
+.menu li {
     margin: 0 10px;
 }
-a {
+.menu a {
     display: block;
     color: #ffffff;
     text-decoration: none;
     text-align: left;
     margin-bottom: 15px;
 }
-a:hover {
+.menu a:hover {
     color: #aaa;
 }
 </style>
