@@ -1,0 +1,1 @@
+{"topologyName":"fsks-damien-12129129-DeliveryTopology-8d914b04-ef3c-4732-a4a2-bcdd0f4b4543-GlobalStreamThread","topics":["delivery-ads-by-stat-id","delivery-ads-by-creative-str-id","services-tactics","services-lines"],"stores":["ads-by-stat-id-store","ads-by-creative-id-str-store","tactics","lines"]}
