@@ -1,26 +1,40 @@
 <template>
     <div class="menu">
         <h1>KSD</h1>
+        <div class="topologyName">{{this.graph.topologyName}}</div>
         <h2>Topics</h2>
         <ul class="topics_list">
-            <li> <router-link :to="{ name: 'topics', params: {topicName: 'topic1'} }">Topic 1</router-link></li>
-            <li> <router-link :to="{ name: 'topics', params: {topicName: 'topic2'} }">Topic 2</router-link></li>
-            <li> <router-link :to="{ name: 'topics', params: {topicName: 'topic3'} }">Topic 3</router-link></li>
-            <li> <router-link :to="{ name: 'topics', params: {topicName: 'topic4'} }">Topic 4</router-link></li>
+            <li v-for="topicNameItem in this.graph.topics"> <router-link :to="{ name: 'topics', params: {topicName: topicNameItem} }">{{topicNameItem}}</router-link></li>
         </ul>
         <h2>Stores</h2>
         <ul class="stores_list">
-            <li> <router-link :to="{ name: 'stores', params: {storeName: 'store1'} }">Store 1</router-link></li>
-            <li> <router-link :to="{ name: 'stores', params: {storeName: 'store2'} }">Store 2</router-link></li>
-            <li> <router-link :to="{ name: 'stores', params: {storeName: 'store3'} }">Store 3</router-link></li>
-            <li> <router-link :to="{ name: 'stores', params: {storeName: 'store4'} }">Store 4</router-link></li>
+            <li v-for="storeNameItem in this.graph.stores"> <router-link :to="{ name: 'stores', params: {storeName: storeNameItem} }">{{storeNameItem}}</router-link></li>
         </ul>
     </div>
 </template>
 
 <script type = "text/javascript" >
+import api from '../api'
+
 export default {
-  name: 'Menu'
+  name: 'Menu',
+  data () {
+    return {
+      graph: {}
+    }
+  },
+  created () {
+    this.fetchGraph()
+  },
+  methods: {
+    fetchGraph () {
+      console.log('Fetching menu')
+      api.get('graph').then((response) => {
+        this.graph = response.data
+      })
+      .catch((err) => console.log('Error : ', err))
+    }
+  }
 }
 </script>
 
@@ -36,6 +50,12 @@ h1,
 h2 {
     font-weight: normal;
     color: #ffffff;
+}
+.topologyName {
+    color: white;
+    border: 1px solid #eee;
+    margin: 5px;
+    padding: 10px;
 }
 ul {
     list-style-type: none;

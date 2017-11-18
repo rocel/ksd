@@ -1,12 +1,13 @@
 <template>
     <div class="topic">
-        TOPIC DATA
+        TOPIC DATA : {{topicName}}
     </div>
 </template>
 
 <script type = "text/javascript" >
 export default {
-  name: 'topic'
+  name: 'topic',
+  props: ['topicName']
 }
 </script>
 
