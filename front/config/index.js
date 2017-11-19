@@ -50,11 +50,11 @@ module.exports = {
   
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../../src/main/resources/templates/home.mustache'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsRoot: path.resolve(__dirname, '../../src/main/resources'),
+    assetsSubDirectory: 'public/',
     assetsPublicPath: '/',
 
     /**

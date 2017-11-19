@@ -18,6 +18,14 @@ export default {
   components: {
     // datatable: DataTable
   },
+  watch: {
+    '$props': {
+      handler: function (val, oldVal) {
+        this.fetchStoreInfo()
+      },
+      deep: true
+    }
+  },
   created () {
     this.fetchStoreInfo()
   },
@@ -25,7 +33,8 @@ export default {
     fetchStoreInfo () {
       console.log('Fetching store info')
       api
-        .get('tactics')
+        .get(`stores/${this.storeName}`)
+        // .get(`tactics`)
         .then(response => {
           this.columns = this.getColumns(response.data)
           this.data = this.getRows(this.columns, response.data)
