@@ -8,8 +8,6 @@
 </template>
 
 <script type = "text/javascript" >
-// const dataTables = require(DataTables.default)
-
 import api from '../api'
 
 export default {
@@ -91,6 +89,9 @@ export default {
   width: calc(100% - 300px);
   background-color: #ffffff;
   height: 100%;
+}
+.table .sc-table {
+  margin: 20px;
 }
 .table h1 {
   color: #39404e;

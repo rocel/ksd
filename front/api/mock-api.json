@@ -1,4 +1,9 @@
 {
+  "services-ads": {
+    "cleanup.policy": "compact",
+    "isInternal": false,
+    "nbPartions": 1
+  },
   "graph": {
     "topologyName": "fsks-damien-12129129-DeliveryTopology",
     "topics": [
