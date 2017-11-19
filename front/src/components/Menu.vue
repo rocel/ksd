@@ -1,6 +1,6 @@
 <template>
     <div class="menu">
-        <h1>KSD</h1>
+        <router-link :to="{ name: 'Main' }"><h1>KSD</h1></router-link>
         <div class="topologyName">{{this.graph.topologyName}}</div>
         <h2>Topics</h2>
         <ul class="topics_list">
@@ -50,6 +50,7 @@ export default {
 h2 {
     font-weight: normal;
     color: #ffffff;
+    text-align: center;
 }
 .menu .topologyName {
     color: white;

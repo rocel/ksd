@@ -2,6 +2,16 @@ package com.rocel.ksd;
 
 import com.google.gson.Gson;
 import com.rocel.ksd.template.MustacheTemplateEngine;
+import kafka.admin.AdminClient;
+import kafka.admin.AdminUtils;
+import kafka.javaapi.PartitionMetadata;
+import kafka.javaapi.TopicMetadata;
+import kafka.javaapi.TopicMetadataRequest;
+import kafka.javaapi.consumer.SimpleConsumer;
+import kafka.server.ConfigType;
+import kafka.utils.ZkUtils;
+import org.apache.kafka.clients.admin.AdminClientConfig;
+import org.apache.kafka.common.requests.MetadataResponse;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.processor.internals.GlobalStreamThread;
@@ -12,6 +22,9 @@ import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.collection.JavaConversions;
+import scala.collection.Seq;
+import scala.math.Ordering;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -27,13 +40,14 @@ public class WebService implements IWebService {
 
     @Override
     public void start(KafkaStreams streams, String host, int port) {
-        staticFileLocation("/static");
+        staticFileLocation("public");
         port(port);
 
         get("/", this::getHome, new MustacheTemplateEngine());
 
         path("api/", () -> {
             get("stores/:storename", (request, response) -> getStoreFromName(streams, request, response));
+            get("topics/:topicname", (request, response) -> getTopicDataFromName(streams, request, response));
             get("graph", (request, response) -> getGraph(streams, request, response));
         });
     }
@@ -78,6 +92,42 @@ public class WebService implements IWebService {
             Log.error("Could not access the globalStreamThread private field");
         }
         return a;
+    }
+
+    private String getTopicDataFromName(KafkaStreams streams, Request request, Response response) {
+        String topicName = request.params(":topicName");
+        String zookeeperServers = "172.16.202.245:2181,172.16.202.248:2181,172.16.202.212:2181/kafka";
+        ZkUtils zkUtils = ZkUtils.apply(zookeeperServers, 3000, 3000, false);
+
+        Properties configProperties = AdminUtils.fetchEntityConfig(zkUtils, ConfigType.Topic(), "services-ads");
+        MetadataResponse.TopicMetadata topicMetadata = AdminUtils.fetchTopicMetadataFromZk(topicName, zkUtils);
+
+        Gson gson = new Gson();
+        configProperties.put("nbPartions", topicMetadata.partitionMetadata().size());
+        configProperties.put("isInternal", topicMetadata.isInternal());
+        return gson.toJson(configProperties);
+    }
+
+    public java.util.Map<String, java.util.Map<Integer, java.util.List<Integer>>> getPartitionAssignmentForTopics(ZkUtils zkUtils, final List<String> topics) {
+        final scala.collection.Seq<String> seqTopics = scala.collection.JavaConversions.asScalaBuffer(topics).toList();
+        scala.collection.mutable.Map<String, scala.collection.Map<Object, scala.collection.Seq<Object>>> tmpMap1 =
+                zkUtils.getPartitionAssignmentForTopics(seqTopics);
+
+        final java.util.Map<String, java.util.Map<Integer, java.util.List<Integer>>> result = new HashMap<>();
+        java.util.Map<String, scala.collection.Map<Object, Seq<Object>>> tmpMap2 = JavaConversions.mapAsJavaMap(tmpMap1);
+        tmpMap2.forEach((k1, v1) -> {
+            String topic = (String) k1;
+            java.util.Map<Object, Seq<Object>> objectSeqMap = JavaConversions.mapAsJavaMap(v1);
+            java.util.Map<Integer, List<Integer>> tmpResultMap = new HashMap<>();
+            objectSeqMap.forEach((k2, v2) -> {
+                Integer tmpInt = (Integer) k2;
+                List<Integer> tmpList = (List<Integer>) (Object) JavaConversions.seqAsJavaList(v2);
+                tmpResultMap.put(tmpInt, tmpList);
+            });
+            result.put(topic, tmpResultMap);
+        });
+
+        return result;
     }
 
     private String getStoreFromName(KafkaStreams streams, Request request, Response response) {

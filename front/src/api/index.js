@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'http://localhost:3000/', // change to /api
+  baseURL: '/api', // baseURL: 'http://localhost:3000/'
   timeout: 5000
 })
