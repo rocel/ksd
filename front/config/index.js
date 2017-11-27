@@ -47,14 +47,13 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
   },
-  
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../../src/main/resources/templates/home.mustache'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../../src/main/resources'),
-    assetsSubDirectory: '../../main/resources/public/',
+    assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 
     /**
