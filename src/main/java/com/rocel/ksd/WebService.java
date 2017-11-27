@@ -35,7 +35,7 @@ public class WebService implements IWebService {
 
     @Override
     public void start(KafkaStreams streams, int port, String zkHosts) {
-        staticFileLocation("public");
+        staticFileLocation("");
         port(port);
         System.out.println("KSD started on port " + port);
         get("/", this::getHome, new MustacheTemplateEngine());
