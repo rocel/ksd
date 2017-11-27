@@ -28,8 +28,8 @@ import java.util.*;
 
 import static spark.Spark.*;
 
-public class WebService implements IWebService {
-    private static final Logger Log = LoggerFactory.getLogger(WebService.class);
+public class KSD implements KSDBase {
+    private static final Logger Log = LoggerFactory.getLogger(KSD.class);
     private Gson gson = new Gson();
 
 

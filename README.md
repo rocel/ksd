@@ -21,6 +21,20 @@ Add to your _pom.xml_
 </dependency>
 ```
 
+## How to use
+```
+KSDBase ksd = new KSD();
+ksd.start(kStreams, 5000, "localhost:2181");
+Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+    ksd.stop();
+});
+```
+`KSD#start()` parameters :
+- kStreams : KafkaStreams instance
+- 5000 : port on which the KSD will be listening
+- "localhost:2181" : URI of the Zookeeper on which the Kafka broker is running
+
+
 ## Features
  - List all topics used in the topology
  - Show information about a selected topic
